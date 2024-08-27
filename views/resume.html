@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Resume </title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: antiquewhite;
+
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 78px auto;
+            padding: 20px;
+            position: absolute;
+            left: 35%;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.9);
+            background: white;
+            border-radius: 9px;
+        }
+
+        h2 {
+            display: inline-block;
+            text-align: center;
+            font-size: 30px;
+
+            margin-bottom: 30px;
+            color: rgb(0, 0, 0);
+            font-family: "PT Serif", serif;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-family: "Permanent Marker", cursive;
+            padding: 3px 3px;
+            font-size: 19px;
+
+
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"] {
+            width: 80%;
+            padding: 5px;
+            margin-bottom: 12px;
+            background: none;
+            font-family: "Roboto Slab", serif;
+            outline: none;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+
+
+        }
+
+        button {
+            width: 80%;
+            padding: 10px;
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgb(0, 38, 255);
+        }
+
+        button:hover {
+            background-color: #072f9c;
+        }
+
+        p {
+            font-family: "Permanent Marker", cursive;
+            text-align: center;
+        }
+
+        a {
+            font-family: "Permanent Marker";
+            color: #020974;
+            font-weight: bold;
+        }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        footer .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 50%;
+            }
+
+            h2 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="file"] {
+                font-size: 16px;
+                padding: 8px;
+            }
+
+            button {
+                padding: 8px;
+                font-size: 16px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+            .container {
+                width: 25%;
+            }
+
+            h2 {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="file"] {
+                font-size: 14px;
+                padding: 6px;
+            }
+
+            button {
+                padding: 6px;
+                font-size: 14px;
+            }
+
+            p {
+                font-size: 12px;
+            }
+
+            footer .footer-content {
+                font-size: 0.8em;
+            }
+
+            footer a {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Submit Your Resume</h2>
+        <form action="/submit-resume" method="post" enctype="multipart/form-data">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="resume">Upload Resume:</label>
+            <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 YourHR. All rights reserved.</p>
+            <p>
+                <a href="/about">About Us</a> |
+                <a href="/contact">Contact</a> |
+                <a href="/privacy">Privacy Policy</a> |
+                <a href="/signup">Sign Up</a> |
+                <a href="/login">Login </a>
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

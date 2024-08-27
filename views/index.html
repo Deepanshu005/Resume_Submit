@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            width: 500px;
+            height: 300x;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 100px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer Styles */
+        footer {
+
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            bottom: 0;
+            text-align: center;
+
+        }
+
+        footer .footer-content {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin: 15px auto;
+            }
+
+            button {
+                padding: 12px;
+            }
+
+            footer {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            button {
+                padding: 14px;
+            }
+
+            footer {
+                width: 100%;
+            }
+
+
+            footer .footer-content {
+                font-size: 0.9em;
+            }
+
+            footer a {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to YourHR</h1>
+        <p>YourHR is your trusted platform to find and apply for jobs.</p>
+
+        <!-- Add the navigation links here -->
+        <p><a href="/signup">Signup</a> | <a href="/login">Login</a>
+
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 YourHR. All rights reserved.</p>
+            <p>
+                <a href="/about">About Us</a> |
+                <a href="/contact">Contact</a> |
+                <a href="/privacy">Privacy Policy</a>
+
+
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -5,6 +5,13 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const path = require('path');
 const multer = require('multer');
+const dotenv = require('dotenv');
+dotenv.config();
+const mongoose = require('mongoose');
+// Load User , Contact  and Resume models
+const User = require('./models/User');
+const Resume = require('./models/Resume');
+const Contact = require("./models/Contact");
 
 // Set up multer for file uploads
 const storage = multer.diskStorage({
@@ -18,16 +25,14 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 // Connect to MongoDB
-const mongoose = require('mongoose');
 
 main().catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/yourhr');
-
+    console.log("Server is contected");
 }
 
 // Middleware
@@ -42,11 +47,6 @@ app.use(session({
 }));
 
 
-// Load User , Contact  and Resume models
-
-const User = require('./models/User');
-const Resume = require('./models/Resume');
-const Contact = require("./models/Contact");
 
 
 // Serve the signup page and index page
@@ -167,6 +167,20 @@ app.post('/submit-resume', upload.single('resume'), (req, res) => {
 
 
 // Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+ database=process.env.MONGODBURL;
+ const start=async(req,res)=>{
+    try{
+        await mongoose.connect(database);
+        app.listen(PORT, () => {
+            console.log(`Server is running on http://localhost:${PORT}`);
+            
+            console.log("Server is contected");
+            
+        });
+    }catch(err){
+        console.log("Error found",err)
+
+    }
+ }
+
+start();

@@ -8,6 +8,7 @@ const multer = require('multer');
 const dotenv = require('dotenv');
 dotenv.config();
 const mongoose = require('mongoose');
+
 // Load User , Contact  and Resume models
 const User = require('./models/User');
 const Resume = require('./models/Resume');
@@ -29,12 +30,6 @@ const PORT = process.env.PORT || 4000;
 
 // Connect to MongoDB
 
-main().catch(err => console.log(err));
-
-async function main() {
-    console.log("Server is contected");
-}
-
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -43,7 +38,7 @@ app.use(session({
     secret: 'secret',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/yourhr' }),
+    store: MongoStore.create({ mongoUrl: process.env.MONGODBURL }),
 }));
 
 
@@ -167,20 +162,21 @@ app.post('/submit-resume', upload.single('resume'), (req, res) => {
 
 
 // Start the server
- database=process.env.MONGODBURL;
- const start=async(req,res)=>{
-    try{
-        await mongoose.connect(database);
+const database = process.env.MONGODBURL;
+
+const start = async () => {
+    try {
+        await mongoose.connect(database, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
         app.listen(PORT, () => {
             console.log(`Server is running on http://localhost:${PORT}`);
-            
-            console.log("Server is contected");
-            
+            console.log("Server is connected to MongoDB Atlas");
         });
-    }catch(err){
-        console.log("Error found",err)
-
+    } catch (err) {
+        console.log("Error found", err);
     }
- }
+};
 
 start();

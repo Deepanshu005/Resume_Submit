@@ -6,6 +6,7 @@ const MongoStore = require('connect-mongo');
 const path = require('path');
 const multer = require('multer');
 const dotenv = require('dotenv');
+const cloudinary = require('cloudinary').v2;
 dotenv.config();
 const mongoose = require('mongoose');
 
@@ -14,16 +15,15 @@ const User = require('./models/User');
 const Resume = require('./models/Resume');
 const Contact = require("./models/Contact");
 
-// Set up multer for file uploads
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
-    }
+// Configure Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 });
-const upload = multer({ storage: storage });
+
+// Set up multer for file uploads
+const upload = multer({ dest: 'public/uploads/' });
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -41,11 +41,7 @@ app.use(session({
     store: MongoStore.create({ mongoUrl: process.env.MONGODBURL }),
 }));
 
-
-
-
 // Serve the signup page and index page
-
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/signup.html'));
 });
@@ -60,7 +56,6 @@ app.get('/login', (req, res) => {
 });
 
 // Serve the resume submission form
-
 app.get('/submit-resume', (req, res) => {
     if (!req.session.userId) {
         return res.redirect('/login');
@@ -84,7 +79,6 @@ app.get('/privacy', (req, res) => {
 });
 
 // Handle signup form submission
-
 app.post('/signup', async (req, res) => {
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -132,14 +126,6 @@ app.post('/login', async (req, res) => {
     }
 });
 
-
-// Handle Contact Us form submission
-app.post('/contact', (req, res) => {
-    const { name, email, message } = req.body;
-    console.log(`Name: ${name}, Email: ${email}, Message: ${message}`);
-    res.send('Thank you for contacting us! We will get back to you soon.');
-});
-
 // Handle resume submission
 app.post('/submit-resume', upload.single('resume'), (req, res) => {
     const { name, email } = req.body;
@@ -149,26 +135,30 @@ app.post('/submit-resume', upload.single('resume'), (req, res) => {
         return res.status(400).send('Please upload a resume.');
     }
 
-    const newResume = new Resume({
-        name,
-        email,
-        resume: resumeFile.filename,
+    cloudinary.uploader.upload(resumeFile.path, { resource_type: 'raw' }, function (error, result) {
+        if (error) {
+            console.error('Error uploading to Cloudinary:', error);
+            return res.status(500).send('Error uploading resume.');
+        }
+
+        const newResume = new Resume({
+            name,
+            email,
+            resume: result.secure_url,
+        });
+
+        newResume.save()
+            .then(() => res.send('Resume submitted successfully.'))
+            .catch(err => res.status(500).send('Error submitting resume.'));
     });
-
-    newResume.save()
-        .then(() => res.send('Resume submitted successfully.'))
-        .catch(err => res.status(500).send('Error submitting resume.'));
 });
-
 
 // Start the server
 const database = process.env.MONGODBURL;
 
 const start = async () => {
     try {
-        await mongoose.connect(database, {
-           
-        });
+        await mongoose.connect(database);
         app.listen(PORT, () => {
             console.log(`Server is running on http://localhost:${PORT}`);
             console.log("Server is connected to MongoDB Atlas");

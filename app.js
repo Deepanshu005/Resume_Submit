@@ -167,8 +167,7 @@ const database = process.env.MONGODBURL;
 const start = async () => {
     try {
         await mongoose.connect(database, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+           
         });
         app.listen(PORT, () => {
             console.log(`Server is running on http://localhost:${PORT}`);
